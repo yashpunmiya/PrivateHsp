@@ -1,0 +1,21 @@
+
+.env
+.env.*
+!.env.example
+*.keystore
+wallets/
+.next/
+privatehsp/
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+recordings/*.webm
+tsconfig.tsbuildinfo
+
+
+# Local merchant key material
+merchant_private_key.pem
+merchant_public_key.pem
+.privatehsp-data/
