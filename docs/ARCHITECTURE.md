@@ -33,6 +33,7 @@ There is no production database or multi-instance persistence. Wallet identity k
 
 ## Buyer orchestration update (2026-10-30)
 - `/api/buyer/procurement` consumes signed quotes from at least two offers, asks the configured LLM to rank only verified quote candidates, then invokes deterministic authorization and persists order state. It does not perform payment preparation, wallet signing, Gateway submission, or claim settlement.
-- `/api/hsp/workflow` advances a persisted local checkpoint ledger through the documented six-step lifecycle only after the quote is approved. It does not call the HSP Gateway, create Gateway identifiers, sign, submit, or claim settlement. Its responses explicitly keep those result flags false.
+- `src/lib/hsp-adapter.ts` defines the replaceable payment workflow adapter. The local adapter returns typed workflow checkpoints with Gateway order/payment data and transaction hash set to `null`, and all external action/settlement flags set to `false`.
+- `/api/hsp/workflow` advances the persisted local checkpoint ledger through the six lifecycle steps only after the quote is approved. It does not call the HSP Gateway, create Gateway identifiers, sign, submit, or claim settlement.
 - Supplier quote issuance supports distinct `SUPPLIER_A_*` and `SUPPLIER_B_*` server identities. The endpoint rejects key/address mismatches and never returns signing keys. No identities are configured here, so issuing offers and running procurement are blocked in this environment.
 - Playwright covers both local service APIs, fail-closed supplier configuration, and invalid audit evidence. It does not cover configured signed offers, a live LLM, wallet signing, or payment states.

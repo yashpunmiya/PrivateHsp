@@ -79,3 +79,8 @@
 - `npm run lint`, `npx tsc --noEmit`, and `npm run build` passed. The build retains the known non-fatal `ox`/viem dynamic dependency warning.
 - The six Playwright tests independent of live Vertex passed, including exact-quote approval and all six locally persisted checkpoints. The live Vertex supplier-ranking test timed out after its bounded retry; a separate prior run had passed a real Vertex ranking, so provider availability is intermittent.
 - No Gateway order, wallet signature, testnet transaction, or HSP settlement was created.
+
+## 2026-11-03 adapter boundary
+- `npm test` — 16 files / 45 tests passed. Adapter tests assert that Gateway order/payment, transaction hash, signature, submission, and settlement data stay absent from the local adapter response.
+- Lint, TypeScript, and production build passed; the known `ox`/viem dynamic import warning remains non-fatal.
+- Six browser tests excluding the live Vertex-ranking test passed, including local workflow progression, approval, audit, and stealth UI. Live Vertex was previously observed returning HTTP 504 after the bounded retry; it remains intermittent and is not treated as a passing check.
